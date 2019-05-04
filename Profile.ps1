@@ -6,8 +6,10 @@ Import-Module oh-my-posh
 Import-Module PsGoogle
 Import-Module PSSudo
 
+# Set the oh-my-posh theme. I use the Hack NF font in the console.
 Set-Theme Paradox
 
+# Override Theme Colors
 $ThemeSettings.Colors.DriveForegroundColor              = [System.ConsoleColor]::Blue
 $ThemeSettings.Colors.PromptBackgroundColor             = [System.ConsoleColor]::Blue
 $ThemeSettings.Colors.WithForegroundColor               = [System.ConsoleColor]::White
@@ -15,14 +17,23 @@ $ThemeSettings.Colors.PromptSymbolColor                 = [System.ConsoleColor]:
 $ThemeSettings.Colors.AdminIconForegroundColor          = [System.ConsoleColor]::DarkRed
 $ThemeSettings.Colors.WithBackgroundColor               = [System.ConsoleColor]::DarkRed
 
-$ThemeSettings.GitSymbols.BranchUntrackedSymbol = [char]::ConvertFromUtf32(0xF192)
+# Override Theme Symbols
+$ThemeSettings.GitSymbols.BranchUntrackedSymbol         = [char]::ConvertFromUtf32(0xF192)
 $ThemeSettings.GitSymbols.BranchIdenticalStatusToSymbol = [char]::ConvertFromUtf32(0x2261)
-$ThemeSettings.PromptSymbols.PromptIndicator = [char]::ConvertFromUtf32(0x03BB)
-$ThemeSettings.PromptSymbols.ElevatedSymbol = [char]::ConvertFromUtf32(0x03A9)
+$ThemeSettings.PromptSymbols.PromptIndicator            = [char]::ConvertFromUtf32(0x03BB)
+$ThemeSettings.PromptSymbols.ElevatedSymbol             = [char]::ConvertFromUtf32(0x03A9)
 
 $DefaultUser = 'rob'
 
-#Start-SshAgent -Quiet
+# Edit this file in VS Code
+function Edit-Profile { code $profile.CurrentUserAllHosts }
+
+# List aliases for any command
+function Get-CmdletAlias ($cmdletname) {
+  Get-Alias |
+    Where-Object -FilterScript {$_.Definition -like "$cmdletname"} |
+      Format-Table -Property Definition, Name -AutoSize
+}
 
 # Set up aliases
 Set-Alias ex "explorer.exe"
