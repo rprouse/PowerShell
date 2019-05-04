@@ -5,6 +5,7 @@ Import-Module posh-git
 Import-Module oh-my-posh
 Import-Module PsGoogle
 Import-Module PSSudo
+import-module DockerCompletion # https://github.com/matt9ucci/DockerCompletion
 
 # Set the oh-my-posh theme. I use the Hack NF font in the console.
 Set-Theme Paradox
