@@ -25,6 +25,10 @@ $ThemeSettings.PromptSymbols.ElevatedSymbol             = [char]::ConvertFromUtf
 
 $DefaultUser = 'rob'
 
+function Prune-LocalBranches() {
+  git branch --merged master | grep -v 'master$' | ForEach-Object { git branch -d $_.Trim() }
+}
+
 # Edit this file in VS Code
 function Edit-Profile { code $profile.CurrentUserAllHosts }
 
@@ -34,6 +38,23 @@ function Get-CmdletAlias ($cmdletname) {
     Where-Object -FilterScript {$_.Definition -like "$cmdletname"} |
       Format-Table -Property Definition, Name -AutoSize
 }
+
+# Runs a batch file and then updates the PS environment variables with the results
+function Get-Batchfile ($file) {
+  $cmd = "`"$file`" & set"
+  cmd /c $cmd | Foreach-Object {
+      $p, $v = $_.split('=')
+      Set-Item -path env:$p -value $v
+  }
+}
+
+
+Write-Host Initializing VS2019 Environment
+
+# get VS tools
+Get-Batchfile "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\VSDevCmd.bat"
+$Env:VisualStudioVersion = "16.0"
+$Env:DevToolsVersion = "160"
 
 # Set up aliases
 Set-Alias ex "explorer.exe"
@@ -47,6 +68,9 @@ $ChocolateyProfile = "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
 if (Test-Path($ChocolateyProfile)) {
   Import-Module "$ChocolateyProfile"
 }
+
+# Start in my source directory
+Set-Location -Path C:\src
 
 Clear-Host
 Write-Host
