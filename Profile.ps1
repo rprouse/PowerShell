@@ -1,11 +1,12 @@
 # Set the code page to the one used by PostGres
 chcp 1252
 
-Import-Module posh-git
-Import-Module oh-my-posh
-Import-Module PsGoogle
-Import-Module PSSudo
-import-module DockerCompletion # https://github.com/matt9ucci/DockerCompletion
+Import-Module posh-git            # https://github.com/dahlbyk/posh-git
+Import-Module oh-my-posh          # https://github.com/JanDeDobbeleer/oh-my-posh
+Import-Module PsGoogle            # https://github.com/gfody/PsGoogle
+Import-Module PSSudo              # https://github.com/ecsousa/PSSudo
+Import-Module DockerCompletion    # https://github.com/matt9ucci/DockerCompletion
+Import-Module Get-ChildItemColor  # https://github.com/joonro/Get-ChildItemColor
 
 # Set the oh-my-posh theme. I use the Hack NF font in the console.
 Set-Theme Paradox
@@ -77,6 +78,8 @@ Set-Alias which Get-Command
 Set-Alias halt "shutdown.exe /s /t 5"
 Set-Alias reboot "shutdown.exe /r /t 5"
 Set-Alias logoff "Shutdown.exe /l"
+Set-Alias l Get-ChildItemColor -option AllScope
+Set-Alias ls Get-ChildItemColorFormatWide -option AllScope
 
 
 # Chocolatey profile
