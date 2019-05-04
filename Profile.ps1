@@ -48,6 +48,15 @@ function Get-Batchfile ($file) {
   }
 }
 
+# Current PowerShell version
+function Get-Version() {
+  "PowerShell " + $PSVersionTable.PSVersion.ToString()
+}
+
+# For new machines
+function Install-Chocolatey {
+  Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+}
 
 Write-Host Initializing VS2019 Environment
 
@@ -62,6 +71,12 @@ Set-Alias linq "C:\Program Files (x86)\LINQPad5\LINQPad.exe"
 Set-Alias np "C:\Program Files (x86)\Notepad++\notepad++.exe"
 Set-Alias st "C:\Program Files (x86)\Atlassian\SourceTree\SourceTree.exe"
 Set-Alias vs "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\DevEnv.exe"
+Set-Alias ver Get-Version
+Set-Alias which Get-Command
+Set-Alias halt "shutdown.exe /s /t 5"
+Set-Alias reboot "shutdown.exe /r /t 5"
+Set-Alias logoff "Shutdown.exe /l"
+
 
 # Chocolatey profile
 $ChocolateyProfile = "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
