@@ -20,10 +20,15 @@ $ThemeSettings.Colors.AdminIconForegroundColor          = [System.ConsoleColor]:
 $ThemeSettings.Colors.WithBackgroundColor               = [System.ConsoleColor]::DarkRed
 
 # Override Theme Symbols
-$ThemeSettings.GitSymbols.BranchUntrackedSymbol         = [char]::ConvertFromUtf32(0xF192)
-$ThemeSettings.GitSymbols.BranchIdenticalStatusToSymbol = [char]::ConvertFromUtf32(0x2261)
-$ThemeSettings.PromptSymbols.PromptIndicator            = [char]::ConvertFromUtf32(0x03BB)
-$ThemeSettings.PromptSymbols.ElevatedSymbol             = [char]::ConvertFromUtf32(0x03A9)
+#$ThemeSettings.GitSymbols.LocalStagedStatusSymbol       = [char]::ConvertFromUtf32(0x)
+$ThemeSettings.GitSymbols.BranchUntrackedSymbol         = [char]::ConvertFromUtf32(0x2205)  # ∅
+$ThemeSettings.GitSymbols.BranchIdenticalStatusToSymbol = [char]::ConvertFromUtf32(0x21CB)  # ⇋
+#$ThemeSettings.GitSymbols.BranchAheadStatusSymbol       = [char]::ConvertFromUtf32(0x21E7)  # ⇧
+#$ThemeSettings.GitSymbols.BranchBehindStatusSymbol      = [char]::ConvertFromUtf32(0x21E9)  # ⇩
+
+$ThemeSettings.PromptSymbols.PromptIndicator            = [char]::ConvertFromUtf32(0x03BB)  # λ
+$ThemeSettings.PromptSymbols.ElevatedSymbol             = [char]::ConvertFromUtf32(0x03A9)  # Ω
+$ThemeSettings.PromptSymbols.VirtualEnvSymbol           = [char]::ConvertFromUtf32(0x236B)  # ⍫
 
 $DefaultUser = 'rob'
 
