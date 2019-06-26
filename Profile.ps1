@@ -75,6 +75,7 @@ $Env:DevToolsVersion = "160"
 # Set up aliases
 Set-Alias ex "explorer.exe"
 Set-Alias linq "C:\Program Files (x86)\LINQPad5\LINQPad.exe"
+Set-Alias wm "C:\Program Files (x86)\WinMerge\WinMergeU.exe"
 Set-Alias np "C:\Program Files (x86)\Notepad++\notepad++.exe"
 Set-Alias st "C:\Program Files (x86)\Atlassian\SourceTree\SourceTree.exe"
 Set-Alias vs "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\DevEnv.exe"
@@ -87,7 +88,6 @@ Set-Alias lock "rundll32.exe user32.dll,LockWorkStation"
 Set-Alias update "start ms-settings:windowsupdate-action"
 Set-Alias l Get-ChildItemColor -option AllScope
 Set-Alias ls Get-ChildItemColorFormatWide -option AllScope
-
 
 # Chocolatey profile
 $ChocolateyProfile = "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
