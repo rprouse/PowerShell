@@ -65,6 +65,10 @@ function Install-Chocolatey {
   Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 }
 
+function nguid() {
+  return [guid]::NewGuid().ToString("B").ToUpperInvariant();
+}
+
 Write-Host Initializing VS2019 Environment
 
 # get VS tools
