@@ -100,7 +100,7 @@ if (Test-Path($ChocolateyProfile)) {
 }
 
 # Start in my source directory
-Set-Location -Path C:\src
+# Set-Location -Path C:\src
 
 Clear-Host
 Write-Host
