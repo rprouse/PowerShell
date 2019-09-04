@@ -7,15 +7,15 @@
     </TN>
     <MS>
       <S N="Name">DockerCompletion</S>
-      <Version N="Version">1.1809.0.181109</Version>
+      <Version N="Version">1.1903.0.190723</Version>
       <S N="Type">Module</S>
       <S N="Description">Docker command completion for PowerShell.</S>
       <S N="Author">Masatoshi Higuchi</S>
       <S N="CompanyName">matt9ucci</S>
-      <S N="Copyright">(c) 2018 Masatoshi Higuchi. All rights reserved.</S>
-      <DT N="PublishedDate">2018-11-09T03:15:41-05:00</DT>
+      <S N="Copyright">(c) 2019 Masatoshi Higuchi. All rights reserved.</S>
+      <DT N="PublishedDate">2019-07-23T13:12:32-04:00</DT>
       <Obj N="InstalledDate" RefId="1">
-        <DT>2019-05-04T11:37:27.6322238-04:00</DT>
+        <DT>2019-09-03T22:29:13.8024211-04:00</DT>
         <MS>
           <Obj N="DisplayHint" RefId="2">
             <TN RefId="1">
@@ -52,22 +52,14 @@
         </TN>
         <DCT>
           <En>
-            <S N="Key">DscResource</S>
+            <S N="Key">Function</S>
             <Obj N="Value" RefId="5">
               <TNRef RefId="2" />
               <LST />
             </Obj>
           </En>
           <En>
-            <S N="Key">RoleCapability</S>
-            <Ref N="Value" RefId="5" />
-          </En>
-          <En>
             <S N="Key">Command</S>
-            <Ref N="Value" RefId="5" />
-          </En>
-          <En>
-            <S N="Key">Cmdlet</S>
             <Ref N="Value" RefId="5" />
           </En>
           <En>
@@ -75,18 +67,26 @@
             <Ref N="Value" RefId="5" />
           </En>
           <En>
-            <S N="Key">Function</S>
+            <S N="Key">RoleCapability</S>
+            <Ref N="Value" RefId="5" />
+          </En>
+          <En>
+            <S N="Key">Cmdlet</S>
+            <Ref N="Value" RefId="5" />
+          </En>
+          <En>
+            <S N="Key">DscResource</S>
             <Ref N="Value" RefId="5" />
           </En>
         </DCT>
       </Obj>
       <Nil N="PowerShellGetFormatVersion" />
-      <S N="ReleaseNotes">First release for docker-ce v18.09.0</S>
+      <S N="ReleaseNotes">First release for docker-ce v19.03.0</S>
       <Obj N="Dependencies" RefId="6">
         <TNRef RefId="2" />
         <LST />
       </Obj>
-      <S N="RepositorySourceLocation">https://www.powershellgallery.com/api/v2/</S>
+      <S N="RepositorySourceLocation">https://www.powershellgallery.com/api/v2</S>
       <S N="Repository">PSGallery</S>
       <S N="PackageManagementProvider">NuGet</S>
       <Obj N="AdditionalMetadata" RefId="7">
@@ -95,22 +95,22 @@
           <T>System.Object</T>
         </TN>
         <MS>
-          <S N="copyright">(c) 2018 Masatoshi Higuchi. All rights reserved.</S>
+          <S N="copyright">(c) 2019 Masatoshi Higuchi. All rights reserved.</S>
           <S N="description">Docker command completion for PowerShell.</S>
           <S N="requireLicenseAcceptance">False</S>
-          <S N="releaseNotes">First release for docker-ce v18.09.0</S>
+          <S N="releaseNotes">First release for docker-ce v19.03.0</S>
           <S N="isLatestVersion">True</S>
           <S N="isAbsoluteLatestVersion">True</S>
-          <S N="versionDownloadCount">1473</S>
-          <S N="downloadCount">2715</S>
-          <S N="packageSize">34748</S>
-          <S N="published">2018-11-09 3:15:41 AM -05:00</S>
-          <S N="created">2018-11-09 3:15:41 AM -05:00</S>
-          <S N="lastUpdated">2019-05-03 7:41:27 PM -04:00</S>
+          <S N="versionDownloadCount">388</S>
+          <S N="downloadCount">3773</S>
+          <S N="packageSize">35890</S>
+          <S N="published">2019-07-23 1:12:32 PM -04:00</S>
+          <S N="created">2019-07-23 1:12:32 PM -04:00</S>
+          <S N="lastUpdated">2019-09-03 9:34:43 PM -04:00</S>
           <S N="tags">docker completion PSModule</S>
           <S N="developmentDependency">False</S>
-          <S N="updated">2019-05-03T19:41:27Z</S>
-          <S N="NormalizedVersion">1.1809.0.181109</S>
+          <S N="updated">2019-09-03T21:34:43Z</S>
+          <S N="NormalizedVersion">1.1903.0.190723</S>
           <S N="Authors">Masatoshi Higuchi</S>
           <S N="IsPrerelease">false</S>
           <S N="ItemType">Module</S>
@@ -120,7 +120,7 @@
           <S N="CompanyName">N/A</S>
         </MS>
       </Obj>
-      <S N="InstalledLocation">C:\Users\rob\Documents\PowerShell\Modules\DockerCompletion\1.1809.0.181109</S>
+      <S N="InstalledLocation">C:\Users\rob\OneDrive\Documents\PowerShell\Modules\DockerCompletion\1.1903.0.190723</S>
     </MS>
   </Obj>
 </Objs>
