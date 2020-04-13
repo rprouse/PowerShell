@@ -69,6 +69,12 @@ function nguid() {
   return [guid]::NewGuid().ToString("B").ToUpperInvariant();
 }
 
+function Update-Git {
+  git checkout master
+  git fetch -p
+  git pull
+}
+
 Write-Host Initializing VS2019 Environment
 
 # get VS tools
@@ -92,6 +98,7 @@ Set-Alias lock "rundll32.exe user32.dll,LockWorkStation"
 Set-Alias update "start ms-settings:windowsupdate-action"
 Set-Alias l Get-ChildItemColor -option AllScope
 Set-Alias ls Get-ChildItemColorFormatWide -option AllScope
+Set-Alias git-update Update-Git
 
 # Chocolatey profile
 $ChocolateyProfile = "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
