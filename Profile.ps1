@@ -108,3 +108,8 @@ Write-Host " Write " -ForegroundColor White -NoNewline
 Write-Host " λ " -ForegroundColor Black -BackgroundColor White -NoNewline
 Write-Host " Code " -ForegroundColor White
 Write-Host
+#region conda initialize
+# !! Contents within this block are managed by 'conda init' !!
+(& "C:\Users\rob\Anaconda3\Scripts\conda.exe" "shell.powershell" "hook") | Out-String | Invoke-Expression
+#endregion
+
