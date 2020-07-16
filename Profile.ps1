@@ -75,6 +75,10 @@ function Update-Git {
   git pull
 }
 
+function Set-SourceDirectory() {
+    Set-Location -Path C:\src
+}
+
 Write-Host Initializing VS2019 Environment
 
 # get VS tools
@@ -99,6 +103,7 @@ Set-Alias update "start ms-settings:windowsupdate-action"
 Set-Alias l Get-ChildItemColor -option AllScope
 Set-Alias ls Get-ChildItemColorFormatWide -option AllScope
 Set-Alias git-update Update-Git
+Set-Alias src Set-SourceDirectory
 
 # Chocolatey profile
 $ChocolateyProfile = "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
