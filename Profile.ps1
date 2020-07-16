@@ -69,10 +69,18 @@ function nguid() {
   return [guid]::NewGuid().ToString("B").ToUpperInvariant();
 }
 
-function Update-Git {
-  git checkout master
+function Update-Git($default_branch) {
+  git checkout $default_branch
   git fetch -p
   git pull
+}
+
+function Update-Master() {
+  Update-Git('master')
+}
+
+function Update-Main() {
+  Update-Git('main')
 }
 
 function Set-SourceDirectory() {
@@ -102,7 +110,6 @@ Set-Alias lock "rundll32.exe user32.dll,LockWorkStation"
 Set-Alias update "start ms-settings:windowsupdate-action"
 Set-Alias l Get-ChildItemColor -option AllScope
 Set-Alias ls Get-ChildItemColorFormatWide -option AllScope
-Set-Alias git-update Update-Git
 Set-Alias src Set-SourceDirectory
 
 # Chocolatey profile
