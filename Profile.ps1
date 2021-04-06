@@ -2,35 +2,14 @@
 chcp 1252
 
 Import-Module posh-git            # https://github.com/dahlbyk/posh-git
-Import-Module oh-my-posh          # https://github.com/JanDeDobbeleer/oh-my-posh
-Import-Module PsGoogle            # https://github.com/gfody/PsGoogle
+#Import-Module oh-my-posh        # https://github.com/JanDeDobbeleer/oh-my-posh
+# Import-Module PsGoogle            # https://github.com/gfody/PsGoogle
 Import-Module PSSudo              # https://github.com/ecsousa/PSSudo
 Import-Module DockerCompletion    # https://github.com/matt9ucci/DockerCompletion
 Import-Module Get-ChildItemColor  # https://github.com/joonro/Get-ChildItemColor
 
-# Set the oh-my-posh theme. I use the Hack NF font in the console.
-Set-Theme Paradox
-
-# Override Theme Colors
-$ThemeSettings.Colors.DriveForegroundColor              = [System.ConsoleColor]::Blue
-$ThemeSettings.Colors.PromptBackgroundColor             = [System.ConsoleColor]::Blue
-$ThemeSettings.Colors.WithForegroundColor               = [System.ConsoleColor]::White
-$ThemeSettings.Colors.PromptSymbolColor                 = [System.ConsoleColor]::White
-$ThemeSettings.Colors.AdminIconForegroundColor          = [System.ConsoleColor]::DarkRed
-$ThemeSettings.Colors.WithBackgroundColor               = [System.ConsoleColor]::DarkRed
-
-# Override Theme Symbols
-#$ThemeSettings.GitSymbols.LocalStagedStatusSymbol       = [char]::ConvertFromUtf32(0x)
-$ThemeSettings.GitSymbols.BranchUntrackedSymbol         = [char]::ConvertFromUtf32(0x2205)  # ∅
-$ThemeSettings.GitSymbols.BranchIdenticalStatusToSymbol = [char]::ConvertFromUtf32(0x21CB)  # ⇋
-#$ThemeSettings.GitSymbols.BranchAheadStatusSymbol       = [char]::ConvertFromUtf32(0x21E7)  # ⇧
-#$ThemeSettings.GitSymbols.BranchBehindStatusSymbol      = [char]::ConvertFromUtf32(0x21E9)  # ⇩
-
-$ThemeSettings.PromptSymbols.PromptIndicator            = [char]::ConvertFromUtf32(0x03BB)  # λ
-$ThemeSettings.PromptSymbols.ElevatedSymbol             = [char]::ConvertFromUtf32(0x03A9)  # Ω
-$ThemeSettings.PromptSymbols.VirtualEnvSymbol           = [char]::ConvertFromUtf32(0x236B)  # ⍫
-
-$DefaultUser = 'rob'
+# Set the oh-my-posh theme. I use the MesloLGS NF font in the console.
+#Set-PoshPrompt -Theme powerlevel10k_classic # ~/.alteridem.omp.json
 
 function Prune-LocalBranches() {
   git branch --merged master | grep -v 'master$' | ForEach-Object { git branch -d $_.Trim() }
@@ -148,3 +127,5 @@ Write-Host
 (& "C:\Users\rob\Anaconda3\Scripts\conda.exe" "shell.powershell" "hook") | Out-String | Invoke-Expression
 #endregion
 
+
+Invoke-Expression (oh-my-posh --init --shell pwsh --config "C:\Users\rob\.alteridem.omp.json")
