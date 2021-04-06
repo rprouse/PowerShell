@@ -128,4 +128,5 @@ Write-Host
 #endregion
 
 
-Invoke-Expression (oh-my-posh --init --shell pwsh --config "C:\Users\rob\.alteridem.omp.json")
+# Invoke-Expression (oh-my-posh --init --shell pwsh --config "$(scoop prefix oh-my-posh)/themes/slim.omp.js")
+Invoke-Expression (oh-my-posh --init --shell pwsh --config "C:\users\rob\.bubbles.omp.js")
