@@ -2,11 +2,11 @@
 chcp 1252
 
 Import-Module posh-git            # https://github.com/dahlbyk/posh-git
-#Import-Module oh-my-posh        # https://github.com/JanDeDobbeleer/oh-my-posh
 # Import-Module PsGoogle            # https://github.com/gfody/PsGoogle
 Import-Module PSSudo              # https://github.com/ecsousa/PSSudo
 Import-Module DockerCompletion    # https://github.com/matt9ucci/DockerCompletion
 Import-Module Get-ChildItemColor  # https://github.com/joonro/Get-ChildItemColor
+Import-Module -Name Terminal-Icons # https://www.hanselman.com/blog/take-your-windows-terminal-and-powershell-to-the-next-level-with-terminal-icons
 
 # Set the oh-my-posh theme. I use the MesloLGS NF font in the console.
 #Set-PoshPrompt -Theme powerlevel10k_classic # ~/.alteridem.omp.json
@@ -127,6 +127,4 @@ Write-Host
 (& "C:\Users\rob\Anaconda3\Scripts\conda.exe" "shell.powershell" "hook") | Out-String | Invoke-Expression
 #endregion
 
-
-# Invoke-Expression (oh-my-posh --init --shell pwsh --config "$(scoop prefix oh-my-posh)/themes/slim.omp.js")
-Invoke-Expression (oh-my-posh --init --shell pwsh --config "C:\users\rob\.bubbles.omp.js")
+Set-PoshPrompt 'C:\Users\rob\.bubbles.omp.json'
