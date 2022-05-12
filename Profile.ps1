@@ -66,12 +66,12 @@ function Set-SourceDirectory() {
     Set-Location -Path C:\src
 }
 
-Write-Host Initializing VS2019 Environment
+Write-Host Initializing VS2022 Environment
 
 # get VS tools
-Get-Batchfile "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\VSDevCmd.bat"
-$Env:VisualStudioVersion = "16.0"
-$Env:DevToolsVersion = "160"
+Get-Batchfile "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\Tools\VSDevCmd.bat"
+$Env:VisualStudioVersion = "17.0"
+$Env:DevToolsVersion = "170"
 
 # Set up aliases
 Set-Alias ex "explorer.exe"
@@ -79,7 +79,7 @@ Set-Alias linq "C:\Program Files (x86)\LINQPad5\LINQPad.exe"
 Set-Alias wm "C:\Program Files (x86)\WinMerge\WinMergeU.exe"
 Set-Alias np "C:\Program Files (x86)\Notepad++\notepad++.exe"
 Set-Alias st "C:\Program Files (x86)\Atlassian\SourceTree\SourceTree.exe"
-Set-Alias vs "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\DevEnv.exe"
+Set-Alias vs "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\IDE\DevEnv.exe"
 Set-Alias ver Get-Version
 Set-Alias which Get-Command
 Set-Alias halt "shutdown.exe /s /t 5"
@@ -124,7 +124,7 @@ Write-Host " Code " -ForegroundColor White
 Write-Host
 #region conda initialize
 # !! Contents within this block are managed by 'conda init' !!
-(& "C:\Users\rob\Anaconda3\Scripts\conda.exe" "shell.powershell" "hook") | Out-String | Invoke-Expression
+# (& "~\Anaconda3\Scripts\conda.exe" "shell.powershell" "hook") | Out-String | Invoke-Expression
 #endregion
 
-Set-PoshPrompt 'C:\Users\rob\.bubbles.omp.json'
+Set-PoshPrompt '~\.bubbles.omp.json'
