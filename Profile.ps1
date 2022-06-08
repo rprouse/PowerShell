@@ -3,7 +3,6 @@ chcp 1252
 
 Import-Module posh-git            # https://github.com/dahlbyk/posh-git
 # Import-Module PsGoogle            # https://github.com/gfody/PsGoogle
-Import-Module PSSudo              # https://github.com/ecsousa/PSSudo
 Import-Module DockerCompletion    # https://github.com/matt9ucci/DockerCompletion
 Import-Module Get-ChildItemColor  # https://github.com/joonro/Get-ChildItemColor
 Import-Module -Name Terminal-Icons # https://www.hanselman.com/blog/take-your-windows-terminal-and-powershell-to-the-next-level-with-terminal-icons
@@ -75,9 +74,9 @@ $Env:DevToolsVersion = "170"
 
 # Set up aliases
 Set-Alias ex "explorer.exe"
-Set-Alias linq "C:\Program Files (x86)\LINQPad5\LINQPad.exe"
+Set-Alias linq "C:\Program Files\LINQPad7\LINQPad7.exe"
 Set-Alias wm "C:\Program Files (x86)\WinMerge\WinMergeU.exe"
-Set-Alias np "C:\Program Files (x86)\Notepad++\notepad++.exe"
+Set-Alias np "C:\Program Files\Notepad++\notepad++.exe"
 Set-Alias st "C:\Program Files (x86)\Atlassian\SourceTree\SourceTree.exe"
 Set-Alias vs "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\IDE\DevEnv.exe"
 Set-Alias ver Get-Version
@@ -97,20 +96,30 @@ if (Test-Path($ChocolateyProfile)) {
   Import-Module "$ChocolateyProfile"
 }
 
-# dotnet-suggest configuration, https://github.com/dotnet/command-line-api/blob/main/docs/dotnet-suggest.md
-$availableToComplete = (dotnet-suggest list) | Out-String
-$availableToCompleteArray = $availableToComplete.Split([Environment]::NewLine, [System.StringSplitOptions]::RemoveEmptyEntries)
+# dotnet suggest shell start
+if (Get-Command "dotnet-suggest" -errorAction SilentlyContinue)
+{
+    $availableToComplete = (dotnet-suggest list) | Out-String
+    $availableToCompleteArray = $availableToComplete.Split([Environment]::NewLine, [System.StringSplitOptions]::RemoveEmptyEntries)
 
-Register-ArgumentCompleter -Native -CommandName $availableToCompleteArray -ScriptBlock {
-    param($commandName, $wordToComplete, $cursorPosition)
-    $fullpath = (Get-Command $wordToComplete.CommandElements[0]).Source
+    Register-ArgumentCompleter -Native -CommandName $availableToCompleteArray -ScriptBlock {
+        param($wordToComplete, $commandAst, $cursorPosition)
+        $fullpath = (Get-Command $commandAst.CommandElements[0]).Source
 
-    $arguments = $wordToComplete.Extent.ToString().Replace('"', '\"')
-    dotnet-suggest get -e $fullpath --position $cursorPosition -- "$arguments" | ForEach-Object {
-        [System.Management.Automation.CompletionResult]::new($_, $_, 'ParameterValue', $_)
+        $arguments = $commandAst.Extent.ToString().Replace('"', '\"')
+        dotnet-suggest get -e $fullpath --position $cursorPosition -- "$arguments" | ForEach-Object {
+            [System.Management.Automation.CompletionResult]::new($_, $_, 'ParameterValue', $_)
+        }
     }
 }
-$env:DOTNET_SUGGEST_SCRIPT_VERSION = "1.0.0"
+else
+{
+    "Unable to provide System.CommandLine tab completion support unless the [dotnet-suggest] tool is first installed."
+    "See the following for tool installation: https://www.nuget.org/packages/dotnet-suggest"
+}
+
+$env:DOTNET_SUGGEST_SCRIPT_VERSION = "1.0.2"
+# dotnet suggest script end
 
 # Start in my source directory
 # Set-Location -Path C:\src
