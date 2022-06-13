@@ -10,8 +10,31 @@ Import-Module -Name Terminal-Icons # https://www.hanselman.com/blog/take-your-wi
 # Set the oh-my-posh theme. I use the MesloLGS NF font in the console.
 #Set-PoshPrompt -Theme powerlevel10k_classic # ~/.alteridem.omp.json
 
+# Git related methods
 function Prune-LocalBranches() {
   git branch --merged master | grep -v 'master$' | ForEach-Object { git branch -d $_.Trim() }
+}
+
+function Update-Git($default_branch) {
+  git checkout $default_branch
+  git fetch -p
+  git pull
+}
+
+function Update-Master() {
+  Update-Git('master')
+}
+
+function Update-Main() {
+  Update-Git('main')
+}
+
+function Set-SourceDirectory() {
+    Set-Location -Path C:\src
+}
+
+function nguid() {
+  return [guid]::NewGuid().ToString("B").ToUpperInvariant();
 }
 
 # Edit this file in VS Code
@@ -38,33 +61,6 @@ function Get-Version() {
   "PowerShell " + $PSVersionTable.PSVersion.ToString()
 }
 
-# For new machines
-function Install-Chocolatey {
-  Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
-}
-
-function nguid() {
-  return [guid]::NewGuid().ToString("B").ToUpperInvariant();
-}
-
-function Update-Git($default_branch) {
-  git checkout $default_branch
-  git fetch -p
-  git pull
-}
-
-function Update-Master() {
-  Update-Git('master')
-}
-
-function Update-Main() {
-  Update-Git('main')
-}
-
-function Set-SourceDirectory() {
-    Set-Location -Path C:\src
-}
-
 Write-Host Initializing VS2022 Environment
 
 # get VS tools
@@ -74,10 +70,7 @@ $Env:DevToolsVersion = "170"
 
 # Set up aliases
 Set-Alias ex "explorer.exe"
-Set-Alias linq "C:\Program Files\LINQPad7\LINQPad7.exe"
-Set-Alias wm "C:\Program Files (x86)\WinMerge\WinMergeU.exe"
 Set-Alias np "C:\Program Files\Notepad++\notepad++.exe"
-Set-Alias st "C:\Program Files (x86)\Atlassian\SourceTree\SourceTree.exe"
 Set-Alias vs "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\IDE\DevEnv.exe"
 Set-Alias ver Get-Version
 Set-Alias which Get-Command
