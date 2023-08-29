@@ -128,4 +128,5 @@ Write-Host
 # (& "~\Anaconda3\Scripts\conda.exe" "shell.powershell" "hook") | Out-String | Invoke-Expression
 #endregion
 
-Set-PoshPrompt '~\.bubbles.omp.json'
+# Initialize oh-my-posh
+oh-my-posh --init --shell pwsh --config "~\.bubbles.omp.json" | Invoke-Expression
