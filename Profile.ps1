@@ -114,6 +114,36 @@ else
 $env:DOTNET_SUGGEST_SCRIPT_VERSION = "1.0.2"
 # dotnet suggest script end
 
+# Shows navigable menu of all options when hitting Ctrl-Space
+Set-PSReadlineKeyHandler -Key Ctrl-Space -Function MenuComplete
+
+# This function searches command history for command lines that start with the current contents of the command line.
+Set-PSReadLineKeyHandler -Chord UpArrow -Function HistorySearchBackward
+
+# ESC clears the line
+Set-PSReadLineKeyHandler -Chord Esc -Function BackwardDeleteInput
+
+# WinGet Command Line Tab Completion
+# https://github.com/microsoft/winget-cli/blob/1fbfacc13950de8a17875d40a8beb99fc6ada6c2/doc/Completion.md
+Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
+    param($wordToComplete, $commandAst, $cursorPosition)
+        [Console]::InputEncoding = [Console]::OutputEncoding = $OutputEncoding = [System.Text.Utf8Encoding]::new()
+        $Local:word = $wordToComplete.Replace('"', '""')
+        $Local:ast = $commandAst.ToString().Replace('"', '""')
+        winget complete --word="$Local:word" --commandline "$Local:ast" --position $cursorPosition | ForEach-Object {
+            [System.Management.Automation.CompletionResult]::new($_, $_, 'ParameterValue', $_)
+        }
+}
+
+# PowerShell parameter completion shim for the dotnet CLI
+# https://learn.microsoft.com/en-ca/dotnet/core/tools/enable-tab-autocomplete?WT.mc_id=modinfra-35653-salean#powershell
+Register-ArgumentCompleter -Native -CommandName dotnet -ScriptBlock {
+     param($commandName, $wordToComplete, $cursorPosition)
+         dotnet complete --position $cursorPosition "$wordToComplete" | ForEach-Object {
+            [System.Management.Automation.CompletionResult]::new($_, $_, 'ParameterValue', $_)
+         }
+ }
+
 # Start in my source directory
 # Set-Location -Path C:\src
 
