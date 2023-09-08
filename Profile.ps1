@@ -115,13 +115,14 @@ $env:DOTNET_SUGGEST_SCRIPT_VERSION = "1.0.2"
 # dotnet suggest script end
 
 # Shows navigable menu of all options when hitting Ctrl-Space
-Set-PSReadlineKeyHandler -Key Ctrl-Space -Function MenuComplete
+Set-PSReadlineKeyHandler -Key Ctrl-Spacebar -Function MenuComplete
 
 # This function searches command history for command lines that start with the current contents of the command line.
-Set-PSReadLineKeyHandler -Chord UpArrow -Function HistorySearchBackward
+Set-PSReadLineKeyHandler -Key UpArrow -Function HistorySearchBackward
+Set-PSReadLineKeyHandler -Key DownArrow -Function HistorySearchForward
 
 # ESC clears the line
-Set-PSReadLineKeyHandler -Chord Esc -Function BackwardDeleteInput
+Set-PSReadLineKeyHandler -Key Escape -Function BackwardDeleteInput
 
 # WinGet Command Line Tab Completion
 # https://github.com/microsoft/winget-cli/blob/1fbfacc13950de8a17875d40a8beb99fc6ada6c2/doc/Completion.md
