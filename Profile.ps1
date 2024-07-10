@@ -146,9 +146,6 @@ Register-ArgumentCompleter -Native -CommandName dotnet -ScriptBlock {
          }
  }
 
-# Start in my source directory
-# Set-Location -Path C:\src
-
 Clear-Host
 Write-Host
 Write-Host " Write " -ForegroundColor White -NoNewline
@@ -162,3 +159,6 @@ Write-Host
 
 # Initialize oh-my-posh
 oh-my-posh --init --shell pwsh --config "~\.bubbles.omp.json" | Invoke-Expression
+
+# Zoxide
+Invoke-Expression (& { (zoxide init --cmd cd powershell | Out-String) })
