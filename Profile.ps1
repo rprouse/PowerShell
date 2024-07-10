@@ -158,7 +158,7 @@ Write-Host
 #endregion
 
 # Initialize oh-my-posh
-oh-my-posh --init --shell pwsh --config "~\.bubbles.omp.json" | Invoke-Expression
+oh-my-posh --init --shell pwsh --config "~\.bubbles.toml" | Invoke-Expression
 
 # Zoxide
 Invoke-Expression (& { (zoxide init --cmd cd powershell | Out-String) })
