@@ -83,6 +83,11 @@ Set-Alias update "start ms-settings:windowsupdate-action"
 Set-Alias l Get-ChildItemColor -option AllScope
 Set-Alias ls Get-ChildItemColorFormatWide -option AllScope
 Set-Alias src Set-SourceDirectory
+Set-Alias paste Get-Clipboard
+Set-Alias pbpaste Get-Clipboard
+Set-Alias copy Set-Clipboard
+Set-Alias pbcopy Set-Clipboard
+Set-Alias profile Edit-Profile
 
 # Chocolatey profile
 $ChocolateyProfile = "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
