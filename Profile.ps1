@@ -6,7 +6,7 @@ Import-Module posh-git            # https://github.com/dahlbyk/posh-git
 Import-Module DockerCompletion    # https://github.com/matt9ucci/DockerCompletion
 Import-Module Get-ChildItemColor  # https://github.com/joonro/Get-ChildItemColor
 Import-Module -Name Terminal-Icons # https://www.hanselman.com/blog/take-your-windows-terminal-and-powershell-to-the-next-level-with-terminal-icons
-Import-Module PowerShellGet
+# Import-Module PowerShellGet
 
 # Set the oh-my-posh theme. I use the MesloLGS NF font in the console.
 #Set-PoshPrompt -Theme powerlevel10k_classic # ~/.alteridem.omp.json
