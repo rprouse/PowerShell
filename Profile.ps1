@@ -85,7 +85,6 @@ Set-Alias ls Get-ChildItemColorFormatWide -option AllScope
 Set-Alias src Set-SourceDirectory
 Set-Alias paste Get-Clipboard
 Set-Alias pbpaste Get-Clipboard
-Set-Alias copy Set-Clipboard
 Set-Alias pbcopy Set-Clipboard
 Set-Alias profile Edit-Profile
 
