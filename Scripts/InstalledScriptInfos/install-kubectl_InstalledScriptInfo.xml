@@ -1,41 +1,36 @@
 <Objs Version="1.1.0.1" xmlns="http://schemas.microsoft.com/powershell/2004/04">
   <Obj RefId="0">
     <TN RefId="0">
-      <T>Microsoft.PowerShell.Commands.PSRepositoryItemInfo</T>
       <T>System.Management.Automation.PSCustomObject</T>
       <T>System.Object</T>
     </TN>
     <MS>
       <S N="Name">install-kubectl</S>
-      <Version N="Version">1.6</Version>
-      <S N="Type">Script</S>
-      <S N="Description">This script is used during unsattended installs or to download kubectl on windows</S>
-      <S N="Author">Karsten.Bott@labbuildr.com</S>
-      <S N="CompanyName">labbuildr</S>
-      <Nil N="Copyright" />
-      <DT N="PublishedDate">2017-10-29T06:31:15-04:00</DT>
-      <Obj N="InstalledDate" RefId="1">
-        <DT>2018-07-02T19:19:59.0546967-04:00</DT>
-        <MS>
-          <Obj N="DisplayHint" RefId="2">
-            <TN RefId="1">
-              <T>Microsoft.PowerShell.Commands.DisplayHintType</T>
-              <T>System.Enum</T>
-              <T>System.ValueType</T>
-              <T>System.Object</T>
-            </TN>
-            <ToString>DateTime</ToString>
-            <I32>2</I32>
-          </Obj>
-        </MS>
+      <S N="Version">1.7</S>
+      <Obj N="Type" RefId="1">
+        <TN RefId="1">
+          <T>Microsoft.PowerShell.PSResourceGet.UtilClasses.ResourceType</T>
+          <T>System.Enum</T>
+          <T>System.ValueType</T>
+          <T>System.Object</T>
+        </TN>
+        <ToString>Script</ToString>
+        <I32>2</I32>
       </Obj>
+      <S N="Description">This script is used during unsattended installs or to download kubectl on windows _x000A__x000A_</S>
+      <S N="Author">Karsten.Bott@labbuildr.com</S>
+      <S N="CompanyName">Pivotal Software</S>
+      <S N="Copyright"></S>
+      <DT N="PublishedDate">2019-01-22T15:11:56.02</DT>
+      <DT N="InstalledDate">2025-02-11T15:53:16.7797915-05:00</DT>
+      <B N="IsPrerelease">false</B>
       <Nil N="UpdatedDate" />
       <Nil N="LicenseUri" />
       <Nil N="ProjectUri" />
       <Nil N="IconUri" />
-      <Obj N="Tags" RefId="3">
+      <Obj N="Tags" RefId="2">
         <TN RefId="2">
-          <T>System.Object[]</T>
+          <T>System.String[]</T>
           <T>System.Array</T>
           <T>System.Object</T>
         </TN>
@@ -43,76 +38,67 @@
           <S>PSScript</S>
         </LST>
       </Obj>
-      <Obj N="Includes" RefId="4">
+      <Obj N="Includes" RefId="3">
         <TN RefId="3">
           <T>System.Collections.Hashtable</T>
           <T>System.Object</T>
         </TN>
         <DCT>
           <En>
-            <S N="Key">Workflow</S>
-            <Obj N="Value" RefId="5">
+            <S N="Key">RoleCapability</S>
+            <Nil N="Value" />
+          </En>
+          <En>
+            <S N="Key">Cmdlet</S>
+            <Obj N="Value" RefId="4">
               <TNRef RefId="2" />
               <LST />
             </Obj>
           </En>
           <En>
             <S N="Key">DscResource</S>
-            <Ref N="Value" RefId="5" />
+            <Obj N="Value" RefId="5">
+              <TNRef RefId="2" />
+              <LST />
+            </Obj>
           </En>
           <En>
-            <S N="Key">Command</S>
-            <Ref N="Value" RefId="5" />
-          </En>
-          <En>
-            <S N="Key">Cmdlet</S>
-            <Ref N="Value" RefId="5" />
+            <S N="Key">Workflow</S>
+            <Nil N="Value" />
           </En>
           <En>
             <S N="Key">Function</S>
-            <Ref N="Value" RefId="5" />
+            <Nil N="Value" />
           </En>
           <En>
-            <S N="Key">RoleCapability</S>
-            <Ref N="Value" RefId="5" />
+            <S N="Key">Command</S>
+            <Obj N="Value" RefId="6">
+              <TNRef RefId="2" />
+              <LST />
+            </Obj>
           </En>
         </DCT>
       </Obj>
-      <Nil N="PowerShellGetFormatVersion" />
-      <Nil N="ReleaseNotes" />
-      <Obj N="Dependencies" RefId="6">
-        <TNRef RefId="2" />
-        <LST />
-      </Obj>
-      <S N="RepositorySourceLocation">https://www.powershellgallery.com/api/v2/items/psscript/</S>
-      <S N="Repository">PSGallery</S>
-      <S N="PackageManagementProvider">NuGet</S>
-      <Obj N="AdditionalMetadata" RefId="7">
+      <S N="PowerShellGetFormatVersion"></S>
+      <S N="ReleaseNotes"></S>
+      <Obj N="Dependencies" RefId="7">
         <TN RefId="4">
-          <T>System.Management.Automation.PSCustomObject</T>
+          <T>Microsoft.PowerShell.PSResourceGet.UtilClasses.Dependency[]</T>
+          <T>System.Array</T>
           <T>System.Object</T>
         </TN>
+        <LST />
+      </Obj>
+      <S N="RepositorySourceLocation">https://www.powershellgallery.com/api/v2</S>
+      <S N="Repository">PSGallery</S>
+      <Obj N="AdditionalMetadata" RefId="8">
+        <TNRef RefId="0" />
         <MS>
-          <S N="description">This script is used during unsattended installs or to download kubectl on windows</S>
-          <S N="requireLicenseAcceptance">False</S>
-          <S N="isLatestVersion">True</S>
-          <S N="isAbsoluteLatestVersion">True</S>
-          <S N="versionDownloadCount">6048</S>
-          <S N="downloadCount">6138</S>
-          <S N="packageSize">3634</S>
-          <S N="published">2017-10-29 6:31:15 AM -04:00</S>
-          <S N="created">2017-10-29 6:31:15 AM -04:00</S>
-          <S N="tags">PSScript</S>
-          <S N="developmentDependency">False</S>
-          <S N="updated">2018-07-02T23:07:32Z</S>
-          <S N="NormalizedVersion">1.6.0</S>
-          <S N="IsPrerelease">false</S>
-          <S N="ItemType">Script</S>
-          <S N="FileList">install-kubectl.nuspec|install-kubectl.ps1</S>
-          <S N="GUID">32a11a36-f91c-4241-a11f-af0cf3e90f38</S>
+          <S N="NormalizedVersion">1.7</S>
+          <S N="IsPrerelease">False</S>
         </MS>
       </Obj>
-      <S N="InstalledLocation">C:\Users\rob\Documents\PowerShell\Scripts</S>
+      <S N="InstalledLocation">C:\Users\RobProuse\OneDrive - Valsoft Aspire\Documents\PowerShell\Scripts</S>
     </MS>
   </Obj>
 </Objs>

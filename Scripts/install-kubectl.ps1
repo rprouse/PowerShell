@@ -1,8 +1,8 @@
 <#PSScriptInfo
-.VERSION 1.6
+.VERSION 1.7
 .GUID 32a11a36-f91c-4241-a11f-af0cf3e90f38
 .AUTHOR Karsten.Bott@labbuildr.com
-.COMPANYNAME 
+.COMPANYNAME Pivotal Software
 .COPYRIGHT 
 .TAGS 
 .LICENSEURI 
@@ -21,7 +21,7 @@
 param(
 $Downloadlocation = $env:TEMP
 )
-
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 if (!(Test-Path $Downloadlocation))
     {
     New-Item -ItemType Directory $Downloadlocation -ErrorAction SilentlyContinue | out-null
