@@ -1,10 +1,12 @@
-# Set the code page to the one used by PostGres
+
+# ==============================================================================
+# Set the code page to the one used by PostgreSQL
 chcp 1252
 
-Import-Module posh-git            # https://github.com/dahlbyk/posh-git
-# Import-Module PsGoogle            # https://github.com/gfody/PsGoogle
-Import-Module DockerCompletion    # https://github.com/matt9ucci/DockerCompletion
-Import-Module Get-ChildItemColor  # https://github.com/joonro/Get-ChildItemColor
+Import-Module posh-git             # https://github.com/dahlbyk/posh-git
+# Import-Module PsGoogle           # https://github.com/gfody/PsGoogle
+Import-Module DockerCompletion     # https://github.com/matt9ucci/DockerCompletion
+Import-Module Get-ChildItemColor   # https://github.com/joonro/Get-ChildItemColor
 Import-Module -Name Terminal-Icons # https://www.hanselman.com/blog/take-your-windows-terminal-and-powershell-to-the-next-level-with-terminal-icons
 # Import-Module PowerShellGet
 
@@ -131,6 +133,7 @@ Get-Batchfile "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\
 $Env:VisualStudioVersion = "17.0"
 $Env:DevToolsVersion = "170"
 
+# ==============================================================================
 # Set up aliases
 Set-Alias ex "explorer.exe"
 Set-Alias np "C:\Program Files\Notepad++\notepad++.exe"
@@ -150,12 +153,43 @@ Set-Alias pbpaste Get-Clipboard
 Set-Alias pbcopy Set-Clipboard
 Set-Alias profile Edit-Profile
 
+# ==============================================================================
+# LLM Functions
+function llm-bundle {
+    repomix --style xml --output-show-line-numbers --output output.txt --ignore **/uv.lock,**/package-lock.json,**/.env,**/Cargo.lock,**/node_modules,**/target,**/dist,**/build,**/output.txt,**/yarn.lock
+}
+
+function llm-clean {
+    rm output.txt
+}
+
+function llm-copy {
+    cat output.txt | pbcopy
+}
+
+function llm-codereview {
+    cat output.txt | llm -m claude-3.5-sonnet -t code-review-gen > code-review.md
+}
+
+function llm-issues {
+    cat output.txt | llm -m claude-3.5-sonnet -t github-issue-gen > issues.md
+}
+
+function llm-test {
+    cat output.txt | llm -m claude-3.5-sonnet -t missing-tests-gen > missing-tests.md
+}
+
+function llm-readme {
+    cat output.txt | llm -t readme-gen > README.md
+}
+
 # Chocolatey profile
 $ChocolateyProfile = "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
 if (Test-Path($ChocolateyProfile)) {
   Import-Module "$ChocolateyProfile"
 }
 
+# ==============================================================================
 # dotnet suggest shell start
 if (Get-Command "dotnet-suggest" -errorAction SilentlyContinue)
 {
@@ -191,6 +225,7 @@ Set-PSReadLineKeyHandler -Key DownArrow -Function HistorySearchForward
 # ESC clears the line
 Set-PSReadLineKeyHandler -Key Escape -Function BackwardDeleteInput
 
+# ==============================================================================
 # WinGet Command Line Tab Completion
 # https://github.com/microsoft/winget-cli/blob/1fbfacc13950de8a17875d40a8beb99fc6ada6c2/doc/Completion.md
 Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
@@ -203,6 +238,7 @@ Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
         }
 }
 
+# ==============================================================================
 # PowerShell parameter completion shim for the dotnet CLI
 # https://learn.microsoft.com/en-ca/dotnet/core/tools/enable-tab-autocomplete?WT.mc_id=modinfra-35653-salean#powershell
 Register-ArgumentCompleter -Native -CommandName dotnet -ScriptBlock {
@@ -212,6 +248,7 @@ Register-ArgumentCompleter -Native -CommandName dotnet -ScriptBlock {
          }
  }
 
+# ==============================================================================
 Clear-Host
 Write-Host
 Write-Host " Write " -ForegroundColor White -NoNewline
