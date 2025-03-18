@@ -224,7 +224,13 @@ Write-Host
 #endregion
 
 # Initialize oh-my-posh
-oh-my-posh --init --shell pwsh --config "~\.bubbles.toml" | Invoke-Expression
+if ($env:WT_SESSION) {
+    # Place Windows Terminal-specific behavior here
+    oh-my-posh --init --shell pwsh --config "~\.bubbles.toml" | Invoke-Expression
+} else {
+    # Place alternative behavior here
+    oh-my-posh --init --shell pwsh --config "$env:POSH_THEMES_PATH/kali.omp.json" | Invoke-Expression
+}
 
 # Zoxide
 Invoke-Expression (& { (zoxide init --cmd cd powershell | Out-String) })
