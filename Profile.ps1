@@ -263,10 +263,11 @@ Write-Host
 # Initialize oh-my-posh
 if ($env:WT_SESSION) {
     # Place Windows Terminal-specific behavior here
-    oh-my-posh --init --shell pwsh --config "~\.bubbles.toml" | Invoke-Expression
+    oh-my-posh --init --shell pwsh --config "~\.bubbles.omp.json" | Invoke-Expression
 } else {
     # Place alternative behavior here
-    oh-my-posh --init --shell pwsh --config "$env:POSH_THEMES_PATH/kali.omp.json" | Invoke-Expression
+    oh-my-posh --init --shell pwsh --config "~\.bubbles.omp.json" | Invoke-Expression
+    #oh-my-posh --init --shell pwsh --config "$env:POSH_THEMES_PATH/kali.omp.json" | Invoke-Expression
 }
 
 # Zoxide
