@@ -1,8 +1,5 @@
 
 # ==============================================================================
-# Set the code page to the one used by PostgreSQL
-chcp 1252
-
 Import-Module posh-git             # https://github.com/dahlbyk/posh-git
 # Import-Module PsGoogle           # https://github.com/gfody/PsGoogle
 Import-Module DockerCompletion     # https://github.com/matt9ucci/DockerCompletion
@@ -249,12 +246,6 @@ Register-ArgumentCompleter -Native -CommandName dotnet -ScriptBlock {
  }
 
 # ==============================================================================
-Clear-Host
-Write-Host
-Write-Host " Write " -ForegroundColor White -NoNewline
-Write-Host " λ " -ForegroundColor Black -BackgroundColor White -NoNewline
-Write-Host " Code " -ForegroundColor White
-Write-Host
 #region conda initialize
 # !! Contents within this block are managed by 'conda init' !!
 # (& "~\Anaconda3\Scripts\conda.exe" "shell.powershell" "hook") | Out-String | Invoke-Expression
@@ -263,9 +254,17 @@ Write-Host
 # Initialize oh-my-posh
 if ($env:WT_SESSION) {
     # Place Windows Terminal-specific behavior here
+    Clear-Host
+    Write-Host
+    Write-Host " Write " -ForegroundColor White -NoNewline
+    Write-Host " λ " -ForegroundColor Black -BackgroundColor White -NoNewline
+    Write-Host " Code " -ForegroundColor White
+
     oh-my-posh --init --shell pwsh --config "~\.bubbles.omp.json" | Invoke-Expression
 } else {
     # Place alternative behavior here
+    figlet -f doom "Write Code" | lolcat
+
     oh-my-posh --init --shell pwsh --config "~\.bubbles.omp.json" | Invoke-Expression
     #oh-my-posh --init --shell pwsh --config "$env:POSH_THEMES_PATH/kali.omp.json" | Invoke-Expression
 }
