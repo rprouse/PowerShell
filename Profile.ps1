@@ -123,10 +123,15 @@ function yt {
 # ==============================================================================
 # Initialize the environment
 
-Write-Host Initializing VS2022 Environment
+# Does the VS2022 environment exist or does the preview environment exist?
+if (Test-Path "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\Tools\VSDevCmd.bat") {
+    Write-Host "Initializing VS2022 Environment"
+} elseif (Test-Path "C:\Program Files\Microsoft Visual Studio\2022\Preview\Common7\Tools\VSDevCmd.bat") {
+    Write-Host "Initializing VS2022 Preview Environment"
+} else {
+    Write-Host "No VS2022 environment found"
+}
 
-# get VS tools
-Get-Batchfile "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\Tools\VSDevCmd.bat"
 $Env:VisualStudioVersion = "17.0"
 $Env:DevToolsVersion = "170"
 
