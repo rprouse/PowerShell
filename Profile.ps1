@@ -64,6 +64,7 @@ function Get-Version() {
 # ==============================================================================
 # Add aliases for the fabric AI prompt patterns
 # Path to the patterns directory
+# Write-Host "Setting up fabric AI prompt patterns..."
 $patternsPath = Join-Path $HOME ".config/fabric/patterns"
 foreach ($patternDir in Get-ChildItem -Path $patternsPath -Directory) {
     $patternName = $patternDir.Name
@@ -125,9 +126,13 @@ function yt {
 
 # Does the VS2022 environment exist or does the preview environment exist?
 if (Test-Path "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\Tools\VSDevCmd.bat") {
-    Write-Host "Initializing VS2022 Environment"
+    # Write-Host "Initializing VS2022 Environment..."
+    Get-Batchfile "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\Tools\VSDevCmd.bat"
+    Set-Alias vs "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\IDE\DevEnv.exe"
 } elseif (Test-Path "C:\Program Files\Microsoft Visual Studio\2022\Preview\Common7\Tools\VSDevCmd.bat") {
-    Write-Host "Initializing VS2022 Preview Environment"
+    # Write-Host "Initializing VS2022 Preview Environment..."
+    Get-Batchfile "C:\Program Files\Microsoft Visual Studio\2022\Preview\Common7\Tools\VSDevCmd.bat"
+    Set-Alias vs "C:\Program Files\Microsoft Visual Studio\2022\Preview\Common7\IDE\DevEnv.exe"
 } else {
     Write-Host "No VS2022 environment found"
 }
@@ -137,9 +142,9 @@ $Env:DevToolsVersion = "170"
 
 # ==============================================================================
 # Set up aliases
+Write-Host "Setting up aliases..."
 Set-Alias ex "explorer.exe"
 Set-Alias np "C:\Program Files\Notepad++\notepad++.exe"
-Set-Alias vs "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\IDE\DevEnv.exe"
 Set-Alias ver Get-Version
 Set-Alias which Get-Command
 Set-Alias halt "shutdown.exe /s /t 5"
@@ -193,6 +198,7 @@ if (Test-Path($ChocolateyProfile)) {
 
 # ==============================================================================
 # dotnet suggest shell start
+# Write-Host "Setting up dotnet-suggest tab completion..."
 if (Get-Command "dotnet-suggest" -errorAction SilentlyContinue)
 {
     $availableToComplete = (dotnet-suggest list) | Out-String
@@ -230,6 +236,7 @@ Set-PSReadLineKeyHandler -Key Escape -Function BackwardDeleteInput
 # ==============================================================================
 # WinGet Command Line Tab Completion
 # https://github.com/microsoft/winget-cli/blob/1fbfacc13950de8a17875d40a8beb99fc6ada6c2/doc/Completion.md
+# Write-Host "Setting up winget tab completion..."
 Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
     param($wordToComplete, $commandAst, $cursorPosition)
         [Console]::InputEncoding = [Console]::OutputEncoding = $OutputEncoding = [System.Text.Utf8Encoding]::new()
@@ -255,6 +262,11 @@ Register-ArgumentCompleter -Native -CommandName dotnet -ScriptBlock {
 # !! Contents within this block are managed by 'conda init' !!
 # (& "~\Anaconda3\Scripts\conda.exe" "shell.powershell" "hook") | Out-String | Invoke-Expression
 #endregion
+
+# Skip oh-my-posh initialization if running in Warp terminal
+if ($env:TERM_PROGRAM -eq "WarpTerminal") {
+    return
+}
 
 # Initialize oh-my-posh
 if ($env:WT_SESSION) {
