@@ -142,7 +142,7 @@ $Env:DevToolsVersion = "170"
 
 # ==============================================================================
 # Set up aliases
-Write-Host "Setting up aliases..."
+# Write-Host "Setting up aliases..."
 Set-Alias ex "explorer.exe"
 Set-Alias np "C:\Program Files\Notepad++\notepad++.exe"
 Set-Alias ver Get-Version
