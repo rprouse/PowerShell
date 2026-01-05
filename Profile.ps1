@@ -125,10 +125,10 @@ function yt {
 # Initialize the environment
 
 # Does the VS2022 or VS2026 environment exist?
-if (Test-Path "C:\Program Files\Microsoft Visual Studio\18\Insiders\Common7\Tools\VSDevCmd.bat") {
+if (Test-Path "C:\Program Files\Microsoft Visual Studio\18\Community\Common7\Tools\VsDevCmd.bat") {
     # Write-Host "Initializing VS2026 Environment..."
-    Get-Batchfile "C:\Program Files\Microsoft Visual Studio\18\Insiders\Common7\Tools\VSDevCmd.bat"
-    Set-Alias vs "C:\Program Files\Microsoft Visual Studio\18\Insiders\Common7\IDE\DevEnv.exe"
+    Get-Batchfile "C:\Program Files\Microsoft Visual Studio\18\Community\Common7\Tools\VsDevCmd.bat"
+    Set-Alias vs "C:\Program Files\Microsoft Visual Studio\18\Community\Common7\IDE\DevEnv.exe"
     $Env:VisualStudioVersion = "18.0"
     $Env:DevToolsVersion = "180"
 } elseif (Test-Path "C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\Tools\VSDevCmd.bat") {
