@@ -1,5 +1,64 @@
 
 # ==============================================================================
+function Test-IsAiAgentSession {
+
+    # Env hint
+    if ($env:CLAUDE_SHELL) { return $true }
+
+    # Parent process
+    $parent = Get-CimInstance Win32_Process -Filter "ProcessId = $PID" |
+    Select-Object -ExpandProperty ParentProcessId |
+    ForEach-Object { Get-Process -Id $_ -ErrorAction SilentlyContinue }
+
+    if ($parent.Name -match 'claude|copilot') {
+        return $true
+    }
+
+    # Command automation flags
+    $cmdLine = (Get-CimInstance Win32_Process -Filter "ProcessId = $PID").CommandLine
+    if ($cmdLine -match '-NonInteractive|-EncodedCommand') {
+        return $true
+    }
+
+    return $false
+}
+
+# Runs a batch file and then updates the PS environment variables with the results
+function Get-Batchfile ($file) {
+    $cmd = "`"$file`" & set"
+    cmd /c $cmd | Foreach-Object {
+        $p, $v = $_.split('=')
+        Set-Item -path env:$p -value $v
+    }
+}
+
+# ==============================================================================
+# Initialize the development environment
+# Does the VS2022 or VS2026 environment exist?
+if (Test-Path "C:\Program Files\Microsoft Visual Studio\18\Community\Common7\Tools\VsDevCmd.bat") {
+    # Write-Host "Initializing VS2026 Environment..."
+    Get-Batchfile "C:\Program Files\Microsoft Visual Studio\18\Community\Common7\Tools\VsDevCmd.bat"
+    Set-Alias vs "C:\Program Files\Microsoft Visual Studio\18\Community\Common7\IDE\DevEnv.exe"
+    $Env:VisualStudioVersion = "18.0"
+    $Env:DevToolsVersion = "180"
+} elseif (Test-Path "C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\Tools\VSDevCmd.bat") {
+    # Write-Host "Initializing VS2022 Environment..."
+    Get-Batchfile "C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\Tools\VSDevCmd.bat"
+    Set-Alias vs "C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\DevEnv.exe"
+    $Env:VisualStudioVersion = "17.0"
+    $Env:DevToolsVersion = "170"
+} else {
+    Write-Host "No Visual Studio environment found"
+}
+
+# ==============================================================================
+# Skip the rest of the profile if running in an AI agent session
+# ==============================================================================
+if (Test-IsAiAgentSession) {
+    return
+}
+
+# ==============================================================================
 Import-Module posh-git             # https://github.com/dahlbyk/posh-git
 # Import-Module PsGoogle           # https://github.com/gfody/PsGoogle
 Import-Module DockerCompletion     # https://github.com/matt9ucci/DockerCompletion
@@ -12,21 +71,21 @@ Import-Module -Name Terminal-Icons # https://www.hanselman.com/blog/take-your-wi
 
 # Git related methods
 function Prune-LocalBranches() {
-  git branch --merged master | grep -v 'master$' | ForEach-Object { git branch -d $_.Trim() }
+    git branch --merged master | grep -v 'master$' | ForEach-Object { git branch -d $_.Trim() }
 }
 
 function Update-Git($default_branch) {
-  git checkout $default_branch
-  git fetch -p
-  git pull
+    git checkout $default_branch
+    git fetch -p
+    git pull
 }
 
 function Update-Master() {
-  Update-Git('master')
+    Update-Git('master')
 }
 
 function Update-Main() {
-  Update-Git('main')
+    Update-Git('main')
 }
 
 function Set-SourceDirectory() {
@@ -34,7 +93,7 @@ function Set-SourceDirectory() {
 }
 
 function nguid() {
-  return [guid]::NewGuid().ToString("B").ToUpperInvariant();
+    return [guid]::NewGuid().ToString("B").ToUpperInvariant();
 }
 
 # Edit this file in VS Code
@@ -42,23 +101,64 @@ function Edit-Profile { code $profile.CurrentUserAllHosts }
 
 # List aliases for any command
 function Get-CmdletAlias ($cmdletname) {
-  Get-Alias |
-    Where-Object -FilterScript {$_.Definition -like "$cmdletname"} |
-      Format-Table -Property Definition, Name -AutoSize
-}
-
-# Runs a batch file and then updates the PS environment variables with the results
-function Get-Batchfile ($file) {
-  $cmd = "`"$file`" & set"
-  cmd /c $cmd | Foreach-Object {
-      $p, $v = $_.split('=')
-      Set-Item -path env:$p -value $v
-  }
+    Get-Alias |
+    Where-Object -FilterScript { $_.Definition -like "$cmdletname" } |
+    Format-Table -Property Definition, Name -AutoSize
 }
 
 # Current PowerShell version
 function Get-Version() {
-  "PowerShell " + $PSVersionTable.PSVersion.ToString()
+    "PowerShell " + $PSVersionTable.PSVersion.ToString()
+}
+
+# ==============================================================================
+# Set up aliases
+# Write-Host "Setting up aliases..."
+Set-Alias ex "explorer.exe"
+Set-Alias np "C:\Program Files\Notepad++\notepad++.exe"
+Set-Alias ver Get-Version
+Set-Alias which Get-Command
+Set-Alias halt "shutdown.exe /s /t 5"
+Set-Alias reboot "shutdown.exe /r /t 5"
+Set-Alias logoff "Shutdown.exe /l"
+Set-Alias lock "rundll32.exe user32.dll,LockWorkStation"
+Set-Alias update "start ms-settings:windowsupdate-action"
+Set-Alias l Get-ChildItemColor -option AllScope
+Set-Alias ls Get-ChildItemColorFormatWide -option AllScope
+Set-Alias src Set-SourceDirectory
+Set-Alias paste Get-Clipboard
+Set-Alias pbpaste Get-Clipboard
+Set-Alias pbcopy Set-Clipboard
+Set-Alias profile Edit-Profile
+
+# ==============================================================================
+# LLM Functions
+function llm-bundle {
+    repomix --style xml --output-show-line-numbers --output output.txt --ignore **/uv.lock,**/package-lock.json,**/.env,**/Cargo.lock,**/node_modules,**/target,**/dist,**/build,**/output.txt,**/yarn.lock
+}
+
+function llm-clean {
+    rm output.txt
+}
+
+function llm-copy {
+    cat output.txt | pbcopy
+}
+
+function llm-codereview {
+    cat output.txt | llm -m claude-3.5-sonnet -t code-review-gen > code-review.md
+}
+
+function llm-issues {
+    cat output.txt | llm -m claude-3.5-sonnet -t github-issue-gen > issues.md
+}
+
+function llm-test {
+    cat output.txt | llm -m claude-3.5-sonnet -t missing-tests-gen > missing-tests.md
+}
+
+function llm-readme {
+    cat output.txt | llm -t readme-gen > README.md
 }
 
 # ==============================================================================
@@ -121,81 +221,10 @@ function yt {
     fabric -y $videoLink --transcript
 }
 
-# ==============================================================================
-# Initialize the environment
-
-# Does the VS2022 or VS2026 environment exist?
-if (Test-Path "C:\Program Files\Microsoft Visual Studio\18\Community\Common7\Tools\VsDevCmd.bat") {
-    # Write-Host "Initializing VS2026 Environment..."
-    Get-Batchfile "C:\Program Files\Microsoft Visual Studio\18\Community\Common7\Tools\VsDevCmd.bat"
-    Set-Alias vs "C:\Program Files\Microsoft Visual Studio\18\Community\Common7\IDE\DevEnv.exe"
-    $Env:VisualStudioVersion = "18.0"
-    $Env:DevToolsVersion = "180"
-} elseif (Test-Path "C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\Tools\VSDevCmd.bat") {
-    # Write-Host "Initializing VS2022 Environment..."
-    Get-Batchfile "C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\Tools\VSDevCmd.bat"
-    Set-Alias vs "C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\DevEnv.exe"
-    $Env:VisualStudioVersion = "17.0"
-    $Env:DevToolsVersion = "170"
-} else {
-    Write-Host "No Visual Studio environment found"
-}
-
-
-# ==============================================================================
-# Set up aliases
-# Write-Host "Setting up aliases..."
-Set-Alias ex "explorer.exe"
-Set-Alias np "C:\Program Files\Notepad++\notepad++.exe"
-Set-Alias ver Get-Version
-Set-Alias which Get-Command
-Set-Alias halt "shutdown.exe /s /t 5"
-Set-Alias reboot "shutdown.exe /r /t 5"
-Set-Alias logoff "Shutdown.exe /l"
-Set-Alias lock "rundll32.exe user32.dll,LockWorkStation"
-Set-Alias update "start ms-settings:windowsupdate-action"
-Set-Alias l Get-ChildItemColor -option AllScope
-Set-Alias ls Get-ChildItemColorFormatWide -option AllScope
-Set-Alias src Set-SourceDirectory
-Set-Alias paste Get-Clipboard
-Set-Alias pbpaste Get-Clipboard
-Set-Alias pbcopy Set-Clipboard
-Set-Alias profile Edit-Profile
-
-# ==============================================================================
-# LLM Functions
-function llm-bundle {
-    repomix --style xml --output-show-line-numbers --output output.txt --ignore **/uv.lock,**/package-lock.json,**/.env,**/Cargo.lock,**/node_modules,**/target,**/dist,**/build,**/output.txt,**/yarn.lock
-}
-
-function llm-clean {
-    rm output.txt
-}
-
-function llm-copy {
-    cat output.txt | pbcopy
-}
-
-function llm-codereview {
-    cat output.txt | llm -m claude-3.5-sonnet -t code-review-gen > code-review.md
-}
-
-function llm-issues {
-    cat output.txt | llm -m claude-3.5-sonnet -t github-issue-gen > issues.md
-}
-
-function llm-test {
-    cat output.txt | llm -m claude-3.5-sonnet -t missing-tests-gen > missing-tests.md
-}
-
-function llm-readme {
-    cat output.txt | llm -t readme-gen > README.md
-}
-
 # Chocolatey profile
 $ChocolateyProfile = "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
 if (Test-Path($ChocolateyProfile)) {
-  Import-Module "$ChocolateyProfile"
+    Import-Module "$ChocolateyProfile"
 }
 
 # ==============================================================================
@@ -259,6 +288,7 @@ Register-ArgumentCompleter -Native -CommandName dotnet -ScriptBlock {
          }
  }
 
+
 # ==============================================================================
 #region conda initialize
 # !! Contents within this block are managed by 'conda init' !!
@@ -273,7 +303,7 @@ if ($env:TERM_PROGRAM -eq "WarpTerminal") {
 # Initialize oh-my-posh
 if ($env:WT_SESSION) {
     # Place Windows Terminal-specific behavior here
-    Clear-Host
+    #Clear-Host
     Write-Host
     Write-Host " Write " -ForegroundColor White -NoNewline
     Write-Host " λ " -ForegroundColor Black -BackgroundColor White -NoNewline
