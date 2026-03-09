@@ -5,8 +5,8 @@
       <T>System.Object</T>
     </TN>
     <MS>
-      <S N="Name">DockerCompletion</S>
-      <S N="Version">1.2704.0.241216</S>
+      <S N="Name">PSDesiredStateConfiguration</S>
+      <S N="Version">2.0.8</S>
       <Obj N="Type" RefId="1">
         <TN RefId="1">
           <T>Microsoft.PowerShell.PSResourceGet.UtilClasses.ResourceType</T>
@@ -17,16 +17,16 @@
         <ToString>Module</ToString>
         <I32>1</I32>
       </Obj>
-      <S N="Description">Docker command completion for PowerShell.</S>
-      <S N="Author">Masatoshi Higuchi</S>
-      <S N="CompanyName">N/A</S>
-      <S N="Copyright">(c) 2017-2024 Masatoshi Higuchi. All rights reserved.</S>
-      <DT N="PublishedDate">2024-12-16T12:33:06.857</DT>
-      <DT N="InstalledDate">2025-02-11T15:52:45.3825241-05:00</DT>
+      <S N="Description">PowerShell Desired State Configuration</S>
+      <S N="Author">Microsoft Corporation</S>
+      <S N="CompanyName">Microsoft Corporation</S>
+      <S N="Copyright">(c) Microsoft Corporation. All rights reserved.</S>
+      <DT N="PublishedDate">2026-02-20T18:22:39.217</DT>
+      <DT N="InstalledDate">2026-03-09T14:10:59.3304838-06:00</DT>
       <B N="IsPrerelease">false</B>
       <Nil N="UpdatedDate" />
-      <URI N="LicenseUri">https://github.com/matt9ucci/DockerCompletion/blob/master/LICENSE</URI>
-      <URI N="ProjectUri">https://github.com/matt9ucci/DockerCompletion</URI>
+      <Nil N="LicenseUri" />
+      <URI N="ProjectUri">https://github.com/PowerShell/PSDesiredStateConfiguration</URI>
       <Nil N="IconUri" />
       <Obj N="Tags" RefId="2">
         <TN RefId="2">
@@ -35,9 +35,21 @@
           <T>System.Object</T>
         </TN>
         <LST>
-          <S>docker</S>
-          <S>completion</S>
+          <S>PSDesiredStateConfiguration</S>
+          <S>Linux</S>
+          <S>Mac</S>
+          <S>Windows</S>
           <S>PSModule</S>
+          <S>PSEdition_Core</S>
+          <S>PSFunction_Configuration</S>
+          <S>PSCommand_Configuration</S>
+          <S>PSFunction_New-DscChecksum</S>
+          <S>PSCommand_New-DscChecksum</S>
+          <S>PSFunction_Get-DscResource</S>
+          <S>PSCommand_Get-DscResource</S>
+          <S>PSFunction_Invoke-DscResource</S>
+          <S>PSCommand_Invoke-DscResource</S>
+          <S>PSIncludes_Function</S>
         </LST>
       </Obj>
       <Obj N="Includes" RefId="3">
@@ -47,42 +59,47 @@
         </TN>
         <DCT>
           <En>
-            <S N="Key">Function</S>
-            <Nil N="Value" />
-          </En>
-          <En>
             <S N="Key">Workflow</S>
             <Nil N="Value" />
           </En>
           <En>
-            <S N="Key">Cmdlet</S>
+            <S N="Key">DscResource</S>
             <Obj N="Value" RefId="4">
               <TNRef RefId="2" />
               <LST />
             </Obj>
           </En>
           <En>
-            <S N="Key">RoleCapability</S>
-            <Nil N="Value" />
-          </En>
-          <En>
-            <S N="Key">DscResource</S>
+            <S N="Key">Command</S>
             <Obj N="Value" RefId="5">
               <TNRef RefId="2" />
-              <LST />
+              <LST>
+                <S>Configuration</S>
+                <S>New-DscChecksum</S>
+                <S>Get-DscResource</S>
+                <S>Invoke-DscResource</S>
+              </LST>
             </Obj>
           </En>
           <En>
-            <S N="Key">Command</S>
+            <S N="Key">Cmdlet</S>
             <Obj N="Value" RefId="6">
               <TNRef RefId="2" />
               <LST />
             </Obj>
           </En>
+          <En>
+            <S N="Key">Function</S>
+            <Nil N="Value" />
+          </En>
+          <En>
+            <S N="Key">RoleCapability</S>
+            <Nil N="Value" />
+          </En>
         </DCT>
       </Obj>
       <S N="PowerShellGetFormatVersion"></S>
-      <S N="ReleaseNotes">CLI v27.4.0_x000D__x000A_Compose v2.32.0</S>
+      <S N="ReleaseNotes"></S>
       <Obj N="Dependencies" RefId="7">
         <TN RefId="4">
           <T>Microsoft.PowerShell.PSResourceGet.UtilClasses.Dependency[]</T>
@@ -96,7 +113,7 @@
       <Obj N="AdditionalMetadata" RefId="8">
         <TNRef RefId="0" />
         <MS>
-          <S N="NormalizedVersion">1.2704.0.241216</S>
+          <S N="NormalizedVersion">2.0.8</S>
           <S N="IsPrerelease">False</S>
         </MS>
       </Obj>
