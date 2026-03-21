@@ -52,6 +52,10 @@ if (Test-Path "C:\Program Files\Microsoft Visual Studio\18\Community\Common7\Too
 }
 
 # ==============================================================================
+# Claude Code Alias to run with a specific MCP server configuration
+function cc { claude --strict-mcp-config --mcp-config "$env:USERPROFILE\.mcp.json" @args }
+
+# ==============================================================================
 # Skip the rest of the profile if running in an AI agent session
 # ==============================================================================
 if (Test-IsAiAgentSession) {
