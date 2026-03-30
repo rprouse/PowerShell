@@ -56,8 +56,31 @@ if (Test-Path "C:\Program Files\Microsoft Visual Studio\18\Community\Common7\Too
 function cc { claude --enable-auto-mode --strict-mcp-config --mcp-config "$env:USERPROFILE\.mcp.json" --  @args}
 
 # ==============================================================================
-# Claude Code Alias to run with a specific MCP server configuration and connected to Telegram
-function ct { claude --enable-auto-mode --channels plugin:telegram@claude-plugins-official --strict-mcp-config --mcp-config "$env:USERPROFILE\.mcp.json" --  @args}
+# Claude Code Aliases to in my Obsidian vaults
+function notes {
+    Set-Location -Path "G:\My Drive\todo\notes"
+    claude --enable-auto-mode -- @args
+}
+
+function til {
+    Set-Location -Path "G:\My Drive\todo\til"
+    claude --enable-auto-mode -- @args
+}
+
+function electronics {
+    Set-Location -Path "G:\My Drive\todo\electronics"
+    claude --enable-auto-mode -- @args
+}
+
+function hacker {
+    Set-Location -Path "G:\My Drive\todo\H@X Notes"
+    claude --enable-auto-mode -- @args
+}
+
+function recipes {
+    Set-Location -Path "G:\My Drive\Recipes"
+    claude --enable-auto-mode -- @args
+}
 
 # ==============================================================================
 # Skip the rest of the profile if running in an AI agent session
