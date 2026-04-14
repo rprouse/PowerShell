@@ -2,8 +2,8 @@
 # ==============================================================================
 function Test-IsAiAgentSession {
 
-    # Env hint
-    if ($env:CLAUDE_SHELL) { return $true }
+    # Env hint (Claude Code sets CLAUDECODE=1)
+    if ($env:CLAUDECODE -or $env:CLAUDE_SHELL) { return $true }
 
     # Parent process
     $parent = Get-CimInstance Win32_Process -Filter "ProcessId = $PID" |
