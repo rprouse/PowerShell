@@ -163,36 +163,6 @@ Set-Alias pbcopy Set-Clipboard
 Set-Alias profile Edit-Profile
 
 # ==============================================================================
-# LLM Functions
-function llm-bundle {
-    repomix --style xml --output-show-line-numbers --output output.txt --ignore **/uv.lock,**/package-lock.json,**/.env,**/Cargo.lock,**/node_modules,**/target,**/dist,**/build,**/output.txt,**/yarn.lock
-}
-
-function llm-clean {
-    rm output.txt
-}
-
-function llm-copy {
-    cat output.txt | pbcopy
-}
-
-function llm-codereview {
-    cat output.txt | llm -m claude-3.5-sonnet -t code-review-gen > code-review.md
-}
-
-function llm-issues {
-    cat output.txt | llm -m claude-3.5-sonnet -t github-issue-gen > issues.md
-}
-
-function llm-test {
-    cat output.txt | llm -m claude-3.5-sonnet -t missing-tests-gen > missing-tests.md
-}
-
-function llm-readme {
-    cat output.txt | llm -t readme-gen > README.md
-}
-
-# ==============================================================================
 # Add aliases for the fabric AI prompt patterns
 # Path to the patterns directory
 # Write-Host "Setting up fabric AI prompt patterns..."
