@@ -53,33 +53,33 @@ if (Test-Path "C:\Program Files\Microsoft Visual Studio\18\Community\Common7\Too
 
 # ==============================================================================
 # Claude Code Alias to run with a specific MCP server configuration
-function cc { claude --enable-auto-mode --strict-mcp-config --mcp-config "$env:USERPROFILE\.mcp.json" --  @args}
+function cc { claude --strict-mcp-config --mcp-config "$env:USERPROFILE\.mcp.json" --  @args}
 
 # ==============================================================================
 # Claude Code Aliases to in my Obsidian vaults
 function notes {
     Set-Location -Path "G:\My Drive\todo\notes"
-    claude --enable-auto-mode -- @args
+    claude --strict-mcp-config --mcp-config "$env:USERPROFILE\.mcp.obsidian.json" -- @args
 }
 
 function til {
     Set-Location -Path "G:\My Drive\todo\til"
-    claude --enable-auto-mode -- @args
+    claude --strict-mcp-config --mcp-config "$env:USERPROFILE\.mcp.obsidian.json" -- @args
 }
 
 function electronics {
     Set-Location -Path "G:\My Drive\todo\electronics"
-    claude --enable-auto-mode -- @args
+    claude --strict-mcp-config --mcp-config "$env:USERPROFILE\.mcp.obsidian.json" -- @args
 }
 
 function hacker {
     Set-Location -Path "G:\My Drive\todo\H@X Notes"
-    claude --enable-auto-mode -- @args
+    claude --strict-mcp-config --mcp-config "$env:USERPROFILE\.mcp.obsidian.json" -- @args
 }
 
 function recipes {
     Set-Location -Path "G:\My Drive\Recipes"
-    claude --enable-auto-mode -- @args
+    claude --strict-mcp-config --mcp-config "$env:USERPROFILE\.mcp.obsidian.json" -- @args
 }
 
 # ==============================================================================
