@@ -1,4 +1,3 @@
-
 # ==============================================================================
 function Test-IsAiAgentSession {
 
@@ -33,22 +32,46 @@ function Get-Batchfile ($file) {
 }
 
 # ==============================================================================
-# Initialize the development environment
-# Does the VS2022 or VS2026 environment exist?
-if (Test-Path "C:\Program Files\Microsoft Visual Studio\18\Community\Common7\Tools\VsDevCmd.bat") {
-    # Write-Host "Initializing VS2026 Environment..."
-    Get-Batchfile "C:\Program Files\Microsoft Visual Studio\18\Community\Common7\Tools\VsDevCmd.bat"
-    Set-Alias vs "C:\Program Files\Microsoft Visual Studio\18\Community\Common7\IDE\DevEnv.exe"
-    $Env:VisualStudioVersion = "18.0"
-    $Env:DevToolsVersion = "180"
-} elseif (Test-Path "C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\Tools\VSDevCmd.bat") {
-    # Write-Host "Initializing VS2022 Environment..."
-    Get-Batchfile "C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\Tools\VSDevCmd.bat"
-    Set-Alias vs "C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\DevEnv.exe"
-    $Env:VisualStudioVersion = "17.0"
-    $Env:DevToolsVersion = "170"
-} else {
-    Write-Host "No Visual Studio environment found"
+# Git related functions
+function Prune-LocalBranches() {
+    git branch --merged master | grep -v 'master$' | ForEach-Object { git branch -d $_.Trim() }
+}
+
+function Update-Git($default_branch) {
+    git checkout $default_branch
+    git fetch -p
+    git pull
+}
+
+function Update-Master() {
+    Update-Git('master')
+}
+
+function Update-Main() {
+    Update-Git('main')
+}
+
+function Set-SourceDirectory() {
+    Set-Location -Path D:\src
+}
+
+function nguid() {
+    return [guid]::NewGuid().ToString("B").ToUpperInvariant();
+}
+
+# Edit this file in VS Code
+function Edit-Profile { code $profile.CurrentUserAllHosts }
+
+# List aliases for any command
+function Get-CmdletAlias ($cmdletname) {
+    Get-Alias |
+    Where-Object -FilterScript { $_.Definition -like "$cmdletname" } |
+    Format-Table -Property Definition, Name -AutoSize
+}
+
+# Current PowerShell version
+function Get-Version() {
+    "PowerShell " + $PSVersionTable.PSVersion.ToString()
 }
 
 # ==============================================================================
@@ -75,7 +98,7 @@ function electronics {
     claude --strict-mcp-config --mcp-config "$env:USERPROFILE\.mcp.cowork.json" -- @args
 }
 
-function hacker {
+function hax {
     Set-Location -Path "G:\My Drive\todo\H@X Notes"
     claude --strict-mcp-config --mcp-config "$env:USERPROFILE\.mcp.cowork.json" -- @args
 }
@@ -83,6 +106,20 @@ function hacker {
 function recipes {
     Set-Location -Path "G:\My Drive\Recipes"
     claude --strict-mcp-config --mcp-config "$env:USERPROFILE\.mcp.cowork.json" -- @args
+}
+
+# ==============================================================================
+# Initialize the development environment
+# Does the VS2022 or VS2026 environment exist?
+if (Test-Path "C:\Program Files\Microsoft Visual Studio\18\Community\Common7\Tools\VsDevCmd.bat") {
+    Write-Host "Initializing VS2026 Environment..."
+    Get-Batchfile "C:\Program Files\Microsoft Visual Studio\18\Community\Common7\Tools\VsDevCmd.bat"
+    Set-Alias vs "C:\Program Files\Microsoft Visual Studio\18\Community\Common7\IDE\DevEnv.exe"
+    $Env:VisualStudioVersion = "18.0"
+    $Env:DevToolsVersion = "180"
+}
+else {
+    Write-Host "No Visual Studio environment found"
 }
 
 # ==============================================================================
@@ -104,48 +141,6 @@ Import-Module -Name Microsoft.WinGet.CommandNotFound
 # Set the oh-my-posh theme. I use the MesloLGS NF font in the console.
 #Set-PoshPrompt -Theme powerlevel10k_classic # ~/.alteridem.omp.json
 
-# Git related methods
-function Prune-LocalBranches() {
-    git branch --merged master | grep -v 'master$' | ForEach-Object { git branch -d $_.Trim() }
-}
-
-function Update-Git($default_branch) {
-    git checkout $default_branch
-    git fetch -p
-    git pull
-}
-
-function Update-Master() {
-    Update-Git('master')
-}
-
-function Update-Main() {
-    Update-Git('main')
-}
-
-function Set-SourceDirectory() {
-    Set-Location -Path C:\src
-}
-
-function nguid() {
-    return [guid]::NewGuid().ToString("B").ToUpperInvariant();
-}
-
-# Edit this file in VS Code
-function Edit-Profile { code $profile.CurrentUserAllHosts }
-
-# List aliases for any command
-function Get-CmdletAlias ($cmdletname) {
-    Get-Alias |
-    Where-Object -FilterScript { $_.Definition -like "$cmdletname" } |
-    Format-Table -Property Definition, Name -AutoSize
-}
-
-# Current PowerShell version
-function Get-Version() {
-    "PowerShell " + $PSVersionTable.PSVersion.ToString()
-}
-
 # ==============================================================================
 # Set up aliases
 # Write-Host "Setting up aliases..."
@@ -165,66 +160,6 @@ Set-Alias paste Get-Clipboard
 Set-Alias pbpaste Get-Clipboard
 Set-Alias pbcopy Set-Clipboard
 Set-Alias profile Edit-Profile
-
-# ==============================================================================
-# Add aliases for the fabric AI prompt patterns
-# Path to the patterns directory
-# Write-Host "Setting up fabric AI prompt patterns..."
-$patternsPath = Join-Path $HOME ".config/fabric/patterns"
-foreach ($patternDir in Get-ChildItem -Path $patternsPath -Directory) {
-    $patternName = $patternDir.Name
-
-    # Dynamically define a function for each pattern
-    $functionDefinition = @"
-function $patternName {
-    [CmdletBinding()]
-    param(
-        [Parameter(ValueFromPipeline = `$true)]
-        [string] `$InputObject,
-
-        [Parameter(ValueFromRemainingArguments = `$true)]
-        [String[]] `$patternArgs
-    )
-
-    begin {
-        # Initialize an array to collect pipeline input
-        `$collector = @()
-    }
-
-    process {
-        # Collect pipeline input objects
-        if (`$InputObject) {
-            `$collector += `$InputObject
-        }
-    }
-
-    end {
-        # Join all pipeline input into a single string, separated by newlines
-        `$pipelineContent = `$collector -join "`n"
-
-        # If there's pipeline input, include it in the call to fabric
-        if (`$pipelineContent) {
-            `$pipelineContent | fabric --pattern $patternName `$patternArgs
-        } else {
-            # No pipeline input; just call fabric with the additional args
-            fabric --pattern $patternName `$patternArgs
-        }
-    }
-}
-"@
-    # Add the function to the current session
-    Invoke-Expression $functionDefinition
-}
-
-# Define the 'yt' function as well
-function yt {
-    [CmdletBinding()]
-    param(
-        [Parameter(Mandatory = $true)]
-        [string]$videoLink
-    )
-    fabric -y $videoLink --transcript
-}
 
 # Chocolatey profile
 $ChocolateyProfile = "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
@@ -256,7 +191,7 @@ else
     "See the following for tool installation: https://www.nuget.org/packages/dotnet-suggest"
 }
 
-$env:DOTNET_SUGGEST_SCRIPT_VERSION = "1.0.2"
+$env:DOTNET_SUGGEST_SCRIPT_VERSION = "2.0.8"
 # dotnet suggest script end
 
 # Shows navigable menu of all options when hitting Ctrl-Space
@@ -293,18 +228,6 @@ Register-ArgumentCompleter -Native -CommandName dotnet -ScriptBlock {
          }
  }
 
-
-# ==============================================================================
-#region conda initialize
-# !! Contents within this block are managed by 'conda init' !!
-# (& "~\Anaconda3\Scripts\conda.exe" "shell.powershell" "hook") | Out-String | Invoke-Expression
-#endregion
-
-# Skip oh-my-posh initialization if running in Warp terminal
-if ($env:TERM_PROGRAM -eq "WarpTerminal") {
-    return
-}
-
 # Initialize oh-my-posh
 if ($env:WT_SESSION) {
     # Place Windows Terminal-specific behavior here
@@ -313,15 +236,14 @@ if ($env:WT_SESSION) {
     Write-Host " Write " -ForegroundColor White -NoNewline
     Write-Host " λ " -ForegroundColor Black -BackgroundColor White -NoNewline
     Write-Host " Code " -ForegroundColor White
-
-    oh-my-posh --init --shell pwsh --config "~\.bubbles.omp.json" | Invoke-Expression
+    Write-Host
 } else {
     # Place alternative behavior here
     figlet -f doom "Write Code" | lolcat
-
-    oh-my-posh --init --shell pwsh --config "~\.bubbles.omp.json" | Invoke-Expression
-    #oh-my-posh --init --shell pwsh --config "$env:POSH_THEMES_PATH/kali.omp.json" | Invoke-Expression
 }
+
+# Posh up my world
+oh-my-posh --init --shell pwsh --config "~\.bubbles.omp.json" | Invoke-Expression
 
 # Zoxide
 Invoke-Expression (& { (zoxide init --cmd cd powershell | Out-String) })
