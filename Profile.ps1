@@ -138,9 +138,6 @@ Import-Module -Name Terminal-Icons # https://www.hanselman.com/blog/take-your-wi
 Import-Module -Name Microsoft.WinGet.CommandNotFound
 # Import-Module PowerShellGet
 
-# Set the oh-my-posh theme. I use the MesloLGS NF font in the console.
-#Set-PoshPrompt -Theme powerlevel10k_classic # ~/.alteridem.omp.json
-
 # ==============================================================================
 # Set up aliases
 # Write-Host "Setting up aliases..."
