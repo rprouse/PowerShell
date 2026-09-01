@@ -85,27 +85,27 @@ function cowork { claude --strict-mcp-config --mcp-config "$env:USERPROFILE\.mcp
 # Claude Code Aliases to in my Obsidian vaults
 function notes {
     Set-Location -Path "G:\My Drive\todo\notes"
-    claude --strict-mcp-config --mcp-config "$env:USERPROFILE\.mcp.cowork.json" -- @args
+    claude --strict-mcp-config --mcp-config "$env:USERPROFILE\.mcp.obsidian.json" -- @args
 }
 
 function til {
     Set-Location -Path "G:\My Drive\todo\til"
-    claude --strict-mcp-config --mcp-config "$env:USERPROFILE\.mcp.cowork.json" -- @args
+    claude --strict-mcp-config --mcp-config "$env:USERPROFILE\.mcp.obsidian.json" -- @args
 }
 
 function electronics {
     Set-Location -Path "G:\My Drive\todo\electronics"
-    claude --strict-mcp-config --mcp-config "$env:USERPROFILE\.mcp.cowork.json" -- @args
+    claude --strict-mcp-config --mcp-config "$env:USERPROFILE\.mcp.obsidian.json" -- @args
 }
 
 function hax {
     Set-Location -Path "G:\My Drive\todo\H@X Notes"
-    claude --strict-mcp-config --mcp-config "$env:USERPROFILE\.mcp.cowork.json" -- @args
+    claude --strict-mcp-config --mcp-config "$env:USERPROFILE\.mcp.obsidian.json" -- @args
 }
 
 function recipes {
     Set-Location -Path "G:\My Drive\Recipes"
-    claude --strict-mcp-config --mcp-config "$env:USERPROFILE\.mcp.cowork.json" -- @args
+    claude --strict-mcp-config --mcp-config "$env:USERPROFILE\.mcp.obsidian.json" -- @args
 }
 
 # ==============================================================================
