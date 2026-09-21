@@ -1,3 +1,6 @@
+# Non-interactive session (VS Code Remote-SSH bootstrap, scp, `ssh host cmd`): load nothing.
+if ([Console]::IsInputRedirected -or [Console]::IsOutputRedirected) { return }
+
 # ==============================================================================
 function Test-IsAiAgentSession {
 
