@@ -111,6 +111,11 @@ function recipes {
     claude --strict-mcp-config --mcp-config "$env:USERPROFILE\.config\mcp\mcp.obsidian.json" -- @args
 }
 
+function feed {
+    Set-Location -Path "D:\src\Fiction\TheFeed"
+    claude --strict-mcp-config --mcp-config "$env:USERPROFILE\.config\mcp\mcp.writing.json" -- @args
+}
+
 # ==============================================================================
 # Initialize the development environment
 # Does the VS2022 or VS2026 environment exist?
