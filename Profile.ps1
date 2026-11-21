@@ -111,8 +111,9 @@ function recipes {
     claude --strict-mcp-config --mcp-config "$env:USERPROFILE\.config\mcp\mcp.obsidian.json" -- @args
 }
 
-function feed {
-    Set-Location -Path "D:\src\Fiction\TheFeed"
+# ==============================================================================
+# Claude Code Aliases for writing projects
+function writing {
     claude --strict-mcp-config --mcp-config "$env:USERPROFILE\.config\mcp\mcp.writing.json" -- @args
 }
 
